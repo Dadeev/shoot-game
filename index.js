@@ -1,9 +1,12 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
-const scoreElem = document.querySelector('#scoreElem')
 
 canvas.width = innerWidth
 canvas.height = innerHeight
+
+const scoreElem = document.querySelector('#scoreElem')
+const startBtn = document.querySelector('#startBtn')
+const modelElem = document.querySelector('#modelElem')
 
 class Player {
     constructor(x, y, radius, color) {
@@ -205,8 +208,6 @@ function spawnEnemies() {
     }, 1000)
 }
 
-animate()
-
 addEventListener('click', (e) => {
     const angle = Math.atan2(e.clientY - canvas.height / 2, e.clientX - canvas.width / 2)
     const velocity = {
@@ -219,4 +220,8 @@ addEventListener('click', (e) => {
     )
 })
 
-spawnEnemies()
+startBtn.addEventListener('click', () => {
+    animate()
+    spawnEnemies()
+    modelElem.style.display = 'none'
+})
