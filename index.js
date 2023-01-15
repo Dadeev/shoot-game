@@ -7,7 +7,7 @@ canvas.height = innerHeight
 const scoreElem = document.querySelector('#scoreElem')
 const startBtn = document.querySelector('#startBtn')
 const modelElem = document.querySelector('#modelElem')
-const bitScoreElem = document.querySelector('#bitScoreElem')
+const bigScoreElem = document.querySelector('#bigScoreElem')
 
 class Player {
     constructor(x, y, radius, color) {
@@ -106,11 +106,20 @@ class Particle {
 const x = canvas.width / 2
 const y = canvas.height / 2
 
-const player = new Player(x, y, 10, '#e5e2e2')
+let player = new Player(x, y, 10, '#e5e2e2')
+let projectiles = []
+let enemies = []
+let particles = []
 
-const projectiles = []
-const enemies = []
-const particles = []
+function init() {
+    player = new Player(x, y, 10, '#e5e2e2')
+    projectiles = []
+    enemies = []
+    particles = []
+    score = 0
+    scoreElem.innerHTML = score
+    bigScoreElem.innerHTML = score
+}
 
 let animationId;
 let score = 0;
@@ -150,7 +159,7 @@ function animate() {
         if (enemyAndPlayerDist - player.radius - enemy.radius < 1) {
             cancelAnimationFrame(animationId)
             modelElem.style.display = 'flex'
-            bitScoreElem.innerHTML = score
+            bigScoreElem.innerHTML = score
         }
 
         projectiles.forEach((projectile, projIndex) => {
@@ -224,6 +233,7 @@ addEventListener('click', (e) => {
 })
 
 startBtn.addEventListener('click', () => {
+    init()
     animate()
     spawnEnemies()
     modelElem.style.display = 'none'
