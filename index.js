@@ -69,7 +69,7 @@ class Enemy {
 const x = canvas.width / 2
 const y = canvas.height / 2
 
-const player = new Player(x, y, 30, '#e5e2e2')
+const player = new Player(x, y, 10, '#e5e2e2')
 
 const projectiles = []
 const enemies = []
@@ -108,10 +108,19 @@ function animate() {
         projectiles.forEach((projectile, projIndex) => {
             const projectileAndEnemyDist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
             if (projectileAndEnemyDist - projectile.radius - enemy.radius < 1) {
-                setTimeout(() => {
-                    projectiles.splice(projIndex, 1)
-                    enemies.splice(enemyIndex, 1)
-                }, 0)
+                if (enemy.radius - 10 > 5) {
+                    gsap.to(enemy, {
+                        radius: enemy.radius - 10
+                    })
+                    setTimeout(() => {
+                        projectiles.splice(projIndex, 1)
+                    }, 0)
+                } else {
+                    setTimeout(() => {
+                        projectiles.splice(projIndex, 1)
+                        enemies.splice(enemyIndex, 1)
+                    }, 0)
+                }
             }
         })
     })
