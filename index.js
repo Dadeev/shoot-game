@@ -74,8 +74,11 @@ const player = new Player(x, y, 30, '#4767d1')
 const projectiles = []
 const enemies = []
 
+
+let animationId;
+
 function animate() {
-    requestAnimationFrame(animate)
+    animationId = requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     player.draw()
 
@@ -86,9 +89,14 @@ function animate() {
     enemies.forEach((enemy, enemyIndex) => {
         enemy.update()
 
+        const enemyAndPlayerDist = Math.hypot(player.x - enemy.x, player.y - enemy.y)
+        if (enemyAndPlayerDist - player.radius - enemy.radius < 1) {
+            cancelAnimationFrame(animationId)
+        }
+
         projectiles.forEach((projectile, projIndex) => {
-            const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
-            if (dist - projectile.radius - enemy.radius < 1) {
+            const projectileAndEnemyDist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+            if (projectileAndEnemyDist - projectile.radius - enemy.radius < 1) {
                 setTimeout(() => {
                     projectiles.splice(projIndex, 1)
                     enemies.splice(enemyIndex, 1)
