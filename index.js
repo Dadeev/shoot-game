@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
+const scoreElem = document.querySelector('#scoreElem')
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -108,6 +109,7 @@ const enemies = []
 const particles = []
 
 let animationId;
+let score = 0;
 
 function animate() {
     animationId = requestAnimationFrame(animate)
@@ -158,6 +160,9 @@ function animate() {
                 }
 
                 if (enemy.radius - 10 > 5) {
+                    score += 100
+                    scoreElem.innerHTML = score
+
                     gsap.to(enemy, {
                         radius: enemy.radius - 10
                     })
@@ -165,6 +170,9 @@ function animate() {
                         projectiles.splice(projIndex, 1)
                     }, 0)
                 } else {
+                    score += 250
+                    scoreElem.innerHTML = score
+
                     setTimeout(() => {
                         projectiles.splice(projIndex, 1)
                         enemies.splice(enemyIndex, 1)
