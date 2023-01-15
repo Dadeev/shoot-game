@@ -7,6 +7,7 @@ canvas.height = innerHeight
 const scoreElem = document.querySelector('#scoreElem')
 const startBtn = document.querySelector('#startBtn')
 const modelElem = document.querySelector('#modelElem')
+const bitScoreElem = document.querySelector('#bitScoreElem')
 
 class Player {
     constructor(x, y, radius, color) {
@@ -148,6 +149,8 @@ function animate() {
         const enemyAndPlayerDist = Math.hypot(player.x - enemy.x, player.y - enemy.y)
         if (enemyAndPlayerDist - player.radius - enemy.radius < 1) {
             cancelAnimationFrame(animationId)
+            modelElem.style.display = 'flex'
+            bitScoreElem.innerHTML = score
         }
 
         projectiles.forEach((projectile, projIndex) => {
